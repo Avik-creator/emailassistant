@@ -13,8 +13,6 @@ export default function AuthSection() {
   const session = useSession()
   const router = useRouter()
 
-
-  console.log(session)
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
     if (session?.data){

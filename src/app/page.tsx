@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Mail, MessageSquare, Trash2, Zap } from "lucide-react"
-import AuthSection from "@/components/auth-section"
+import AuthSection from "@/components/landingPage/auth-section"
 import FeatureCard from "@/components/feature-card"
-import AnimatedHeader from "@/components/animated-header"
-import AnimatedImage from "@/components/animated-image"
+import AnimatedHeader from "@/components/landingPage/animated-header"
+import AnimatedImage from "@/components/landingPage/animated-image"
 
 export default function LandingPage() {
   return (
