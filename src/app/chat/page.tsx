@@ -68,12 +68,7 @@ export default function ChatPage() {
               <AvatarFallback>{session.user.name?.charAt(0) || "U"}</AvatarFallback>
             </Avatar>
           )}
-          <Link href="/email">
-            <Button variant="outline" size={isMobile ? "icon" : "default"} className="border-neutral-800 bg-black text-white hover:bg-neutral-900">
-              <Mail className="h-5 w-5" />
-              {!isMobile && <span className="ml-2">Email View</span>}
-            </Button>
-          </Link>
+          
           <Link href="/api/auth/signout">
             <Button variant="ghost" size="icon" className="text-neutral-300 hover:bg-neutral-900">
               <LogOut className="h-5 w-5" />
