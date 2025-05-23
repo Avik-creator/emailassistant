@@ -2,6 +2,10 @@
 
 A modern, AI-powered email management system built with Next.js that allows you to interact with your emails using natural language commands.
 
+# Working:
+
+https://github.com/user-attachments/assets/0f631151-0780-46a4-a698-e54ecbf79039
+
 ## ✨ Features
 
 - **Natural Language Commands** - Manage your emails through simple conversational prompts
