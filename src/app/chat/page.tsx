@@ -111,18 +111,23 @@ export default function ChatPage() {
       </div>
 
       {/* Input Bar */}
-      <form onSubmit={handleSubmit} className="bg-black border-t border-neutral-800 p-4 flex gap-2">
-        <Input
-          className="flex-1 bg-neutral-900 text-white border-neutral-800 placeholder:text-neutral-500 focus:ring-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-700"
-          placeholder="Type your message..."
-          value={input}
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
-        <Button type="submit" disabled={isLoading || !input.trim()} className="bg-blue-800 text-white hover:bg-blue-700">
-          <Send className="h-5 w-5" />
-        </Button>
-      </form>
+      <form onSubmit={handleSubmit} className="bg-black border-t border-neutral-800 p-2 flex gap-1 items-center">
+  <Input
+    className="flex-1 h-8 text-sm bg-neutral-900 text-white border-neutral-800 placeholder:text-neutral-500 focus:ring-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-700"
+    placeholder="Message..."
+    value={input}
+    onChange={handleInputChange}
+    disabled={isLoading}
+  />
+  <Button
+    type="submit"
+    disabled={isLoading || !input.trim()}
+    className="h-8 px-2 bg-blue-800 text-white hover:bg-blue-700"
+  >
+    <Send className="h-4 w-4" />
+  </Button>
+</form>
+
     </div>
   )
 }

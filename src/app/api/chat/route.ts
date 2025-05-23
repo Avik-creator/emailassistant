@@ -2,9 +2,7 @@ import { createGroq } from "@ai-sdk/groq"
 import { streamText, tool, ToolInvocation } from "ai"
 import { auth } from "@/auth"
 import { z } from "zod"
-import { sendEmail, getEmails, searchEmails, composeEmail, replyToEmail, deleteEmail } from "@/app/actions/action"
-
-// Allow streaming responses up to 30 seconds
+import { sendEmail, getEmails, replyToEmail, deleteEmail, starEmail, unstarEmail, sendToTrash, unTrashEmail, getEmailLabelofSpecificEmail, searchEmails  } from "@/app/actions/action"
 
 
 interface Message {
@@ -39,6 +37,13 @@ export async function POST(req: Request) {
     3. Searching emails - You can help find emails based on criteria like sender, subject, or content
     4. Deleting emails - You can help delete emails from the user's inbox
     5. Replying to emails - You can help reply to emails from the user's inbox  
+    6. Starring emails - You can help star emails from the user's inbox
+    7. Unstarring emails - You can help unstar emails from the user's inbox
+    8. Sending emails to trash - You can help send emails to trash from the user's inbox
+    9. Untrashing emails - You can help untrash emails from the user's trash
+    10. Getting the label of a specific email - You can help get the label of a specific email from the user's inbox
+    11. Searching for emails - You can help search for emails from the user's inbox
+    
 
     The user is authenticated with their Google account: ${session.user?.email || "Unknown user"}
     
@@ -122,8 +127,68 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                     return `Email deleted successfully`
                 }
             }),
+            starEmail: tool({
+                description: "Star an email",
+                parameters: z.object({
+                    id: z.string(),
+                }),
+                execute: async ({ id }) => {
+                    const email = await starEmail(id)
+                    return `Email starred successfully`
+                }
+            }),
+            unstarEmail: tool({
+                description: "Unstar an email",
+                parameters: z.object({
+                    id: z.string(),
+                }),
+                execute: async ({ id }) => {
+                    const email = await unstarEmail(id) 
+                    return `Email unstarred successfully`
+                }
+            }),
+            sendToTrash: tool({
+                description: "Send an email to trash",
+                parameters: z.object({
+                    id: z.string(),
+                }),
+                execute: async ({ id }) => {
+                    const email = await sendToTrash(id)
+                    return `Email sent to trash successfully`
+                }   
+            }),
+            unTrashEmail: tool({
+                description: "Untrash an email",
+                parameters: z.object({
+                    id: z.string(),
+                }), 
+                execute: async ({ id }) => {
+                    const email = await unTrashEmail(id)
+                    return `Email untrashed successfully`
+                }
+            }),
+            getEmailLabelofSpecificEmail: tool({
+                description: "Get the label of a specific email",
+                parameters: z.object({
+                    id: z.string(),
+                }),
+                execute: async ({ id }) => {
+                    const email = await getEmailLabelofSpecificEmail(id)
+                    return `Email label: ${email.labelIds}`
+                }
+            }),
+            searchEmails: tool({
+                description: "Search for emails",
+                parameters: z.object({
+                    query: z.string(),
+                }),
+                execute: async ({ query }) => {
+                    const emails = await searchEmails(query)
+                    return `Here are the emails that match your query: ${emails.map((email) => email.data?.payload?.headers?.find((header: any) => header.name === 'Subject')?.value).join(', ')}`
+                }
+            })      
         },
-        maxSteps: 2
+        maxSteps: 4
     })
 
     return result.toDataStreamResponse()

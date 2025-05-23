@@ -1,4 +1,4 @@
-import { auth, signOut } from "@/auth"
+import { auth } from "@/auth"
 
 import { users, accounts } from "@/lib/schema";
 import { db } from "@/lib/schema";
@@ -321,3 +321,221 @@ export async function replyToEmail(id: string, to: string, subject: string, body
         throw new Error("Error replying to email");
     }
 }
+
+export async function starEmail(id: string) {
+    const session = await auth();
+
+    if (!session?.user) {
+        throw new Error("User not found");
+    }
+
+    const user = await getUserFromDB(session.user.email as string);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const account = await getAccessandRefreshToken(user.id);
+    
+    if(!account) {
+        throw new Error("Account not found");
+    }
+
+    const oauth2Client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+
+    try{
+        oauth2Client.setCredentials({
+            access_token: account.accessToken,
+            refresh_token: account.refreshToken,
+        })
+
+        const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+        const response = await gmail.users.messages.modify({
+            userId: "me",
+            id: id,
+            requestBody: {
+                addLabelIds: ["STARRED"],
+            }
+        })
+
+        return response.data;
+    }catch(error){
+        console.error("Error starring email:", error);
+        throw new Error("Error starring email");
+    }
+}
+
+export async function unstarEmail(id: string) {
+    const session = await auth();
+
+    if (!session?.user) {
+        throw new Error("User not found");
+    }
+
+    const user = await getUserFromDB(session.user.email as string);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const account = await getAccessandRefreshToken(user.id);
+    
+    if(!account) {
+        throw new Error("Account not found");
+    }
+
+    const oauth2Client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+
+    try{
+        oauth2Client.setCredentials({
+            access_token: account.accessToken,
+            refresh_token: account.refreshToken,
+        })
+
+        const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+        const response = await gmail.users.messages.modify({
+            userId: "me",
+            id: id,
+            requestBody: {
+                removeLabelIds: ["STARRED"],
+            }
+        })
+
+        return response.data;
+    }catch(error){
+        console.error("Error unstarring email:", error);
+        throw new Error("Error unstarring email");
+    }
+}
+
+
+export async function getEmailLabelofSpecificEmail(id: string) {
+    const session = await auth();
+
+    if (!session?.user) {
+        throw new Error("User not found");
+    }
+
+    const user = await getUserFromDB(session.user.email as string);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const account = await getAccessandRefreshToken(user.id);
+
+    if(!account) {
+        throw new Error("Account not found");
+    }
+
+    const oauth2Client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+    
+    try{
+        oauth2Client.setCredentials({
+            access_token: account.accessToken,
+            refresh_token: account.refreshToken,
+        })
+        
+        const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+        const response = await gmail.users.messages.get({
+            userId: "me",
+            id: id,
+        });
+        
+        return response.data;
+    }catch(error){
+        console.error("Error getting email label of specific email:", error);
+        throw new Error("Error getting email label of specific email");
+    }
+}
+
+export async function sendToTrash(id: string) {
+    const session = await auth();
+
+    if (!session?.user) {
+        throw new Error("User not found");
+    }
+
+    const user = await getUserFromDB(session.user.email as string);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const account = await getAccessandRefreshToken(user.id);
+    
+    if(!account) {
+        throw new Error("Account not found");
+    }
+
+    const oauth2Client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+    
+    try{
+        oauth2Client.setCredentials({
+            access_token: account.accessToken,
+            refresh_token: account.refreshToken,
+        })
+        
+        const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+        const response = await gmail.users.messages.trash({
+            userId: "me",
+            id: id,
+        });
+        
+        return response.data;
+    }catch(error){
+        console.error("Error sending email to trash:", error);
+        throw new Error("Error sending email to trash");
+    }
+}
+
+export async function unTrashEmail(id: string) {
+    const session = await auth();
+
+    if (!session?.user) {
+        throw new Error("User not found");
+    }
+
+    const user = await getUserFromDB(session.user.email as string);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const account = await getAccessandRefreshToken(user.id);
+    
+    if(!account) {
+        throw new Error("Account not found");
+    }
+
+    const oauth2Client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+    
+    try{
+        oauth2Client.setCredentials({
+            access_token: account.accessToken,
+            refresh_token: account.refreshToken,
+        })
+        
+        const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+        const response = await gmail.users.messages.untrash({
+            userId: "me",
+            id: id,
+        });
+        
+        return response.data;
+    }catch(error){
+        console.error("Error untrashing email:", error);
+        throw new Error("Error untrashing email");
+    }
+}
+
