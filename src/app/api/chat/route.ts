@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createGroq } from "@ai-sdk/groq"
 import { streamText, tool, ToolInvocation } from "ai"
 import { auth } from "@/auth"
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
 
                     return `Here are summaries of your recent emails:
 
-${emails.data.map((email: any) => {
+${emails.data.map((email: {from: string, subject: string, body: string}) => {
                         const from = email.from;
                         const subject = email.subject;
                         const body = email.body;
