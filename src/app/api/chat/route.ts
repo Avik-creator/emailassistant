@@ -17,10 +17,6 @@ interface EmailHeader {
     value: string;
 }
 
-interface EmailPayload {
-    headers: EmailHeader[];
-}
-
 
 const groq = createGroq({
     apiKey: process.env.GROQ_API_KEY
