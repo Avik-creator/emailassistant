@@ -30,20 +30,9 @@ interface EmailData {
     labels?: string[];
 }
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T> {
     status: number;
     data: T;
-}
-
-interface GmailMessage {
-    id?: string | null;
-    threadId?: string | null;
-    labelIds?: string[] | null;
-    snippet?: string | null;
-    payload?: gmail_v1.Schema$MessagePart;
-    sizeEstimate?: number | null;
-    historyId?: string | null;
-    internalDate?: string | null;
 }
 
 interface GmailHeader {
@@ -315,7 +304,7 @@ export async function searchEmails(query: string): Promise<ApiResponse<gmail_v1.
 // composeEmail is essentially the same as sendEmail, so we'll export it as an alias
 export const composeEmail = sendEmail;
 
-export async function deleteEmail(id: string): Promise<ApiResponse<{}>> {
+export async function deleteEmail(id: string): Promise<ApiResponse<string>> {
     try {
         const session = await auth();
 
@@ -357,7 +346,7 @@ export async function deleteEmail(id: string): Promise<ApiResponse<{}>> {
         console.error("Error deleting email:", error);
         return {
             status: 500,
-            data: {} as gmail_v1.Schema$Message,
+            data: "Error deleting email"
         };
     }
 }

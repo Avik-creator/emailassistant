@@ -2,6 +2,7 @@ import { createGroq } from "@ai-sdk/groq"
 import { streamText, tool, ToolInvocation } from "ai"
 import { auth } from "@/auth"
 import { z } from "zod"
+import { gmail_v1 } from 'googleapis'
 import { sendEmail, getEmails, replyToEmail, deleteEmail, starEmail, unstarEmail, sendToTrash, unTrashEmail, getEmailLabelofSpecificEmail, searchEmails  } from "@/app/actions/action"
 
 
@@ -9,6 +10,21 @@ interface Message {
     role: 'user' | 'assistant';
     content: string;
     toolInvocations?: ToolInvocation[];
+}
+
+interface EmailHeader {
+    name: string;
+    value: string;
+}
+
+interface EmailPayload {
+    headers: EmailHeader[];
+}
+
+interface EmailMessage {
+    data?: {
+        payload?: EmailPayload;
+    };
 }
 
 const groq = createGroq({
@@ -215,7 +231,8 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ query }) => {
                     const emails = await searchEmails(query)
-                    return `Here are the emails that match your query: ${emails.data.map((email: any) => email.data?.payload?.headers?.find((header: any) => header.name === 'Subject')?.value).join(', ')}`
+                    return `Here are the emails that match your query: ${emails.data.map((email: gmail_v1.Schema$Message) => 
+                        email.payload?.headers?.find(header => header.name === 'Subject')?.value).join(', ')}`
                 }
             })      
         },
