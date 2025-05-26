@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
         <section>
           <h2 className="text-2xl font-semibold mb-4 text-green-300">8. Changes to Privacy Policy</h2>
           <p className="mb-4">
-            We may update this Privacy Policy periodically. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+            We may update this Privacy Policy periodically. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the <b>Last Updated</b> date.
           </p>
         </section>
 
@@ -108,7 +108,7 @@ const PrivacyPolicy = () => {
             If you have any questions about this Privacy Policy or our data practices, please contact us at:
           </p>
           <p className="mb-4">
-            Email: privacy@emailassistant.com
+            Email: avikm744@gmail.com
           </p>
         </section>
 

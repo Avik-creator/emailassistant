@@ -8,10 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Mail, ArrowLeft, Send, LogOut, MessageSquare } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useMobile } from "@/lib/use-mobile"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { Card } from "@/components/ui/card"
 
 export default function ChatPage() {
   const { data: session, status } = useSession()
@@ -21,7 +19,7 @@ export default function ChatPage() {
   })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const isMobile = useMobile()
+
 
   // Scroll to bottom when messages change
   useEffect(() => {

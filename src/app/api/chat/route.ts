@@ -77,7 +77,7 @@ export async function POST(req: Request) {
 
                     return `Here are summaries of your recent emails:
 
-${emails.map((email) => {
+${emails.data.map((email: any) => {
                         const from = email.from;
                         const subject = email.subject;
                         const body = email.body;
@@ -101,7 +101,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ to, subject, body }) => {
                     const email = await sendEmail(to, subject, body)
-                    return `Email sent successfully to ${to} with subject ${subject} and body ${body}`
+                    if (email) {
+                        return `Email sent successfully to ${to} with subject ${subject} and body ${body}`
+                    } else {
+                        return `Email not sent`
+                    }
                 }
             }),
             replyToEmail: tool({
@@ -114,7 +118,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id, to, subject, body }) => {
                     const email = await replyToEmail(id, to, subject, body)
-                    return `Email replied to successfully to ${to} with subject ${subject} and body ${body}`
+                    if (email) {
+                        return `Email replied to successfully to ${to} with subject ${subject} and body ${body}`
+                    } else {
+                        return `Email not replied to`
+                    }
                 }
             }),
             deleteEmail: tool({
@@ -124,6 +132,9 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id }) => {
                     const email = await deleteEmail(id)
+                    if(email.status === 500)    {
+                        return `Email not deleted`
+                    }
                     return `Email deleted successfully`
                 }
             }),
@@ -134,7 +145,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id }) => {
                     const email = await starEmail(id)
-                    return `Email starred successfully`
+                    if (email.data) {
+                        return `Email starred successfully`
+                    } else {
+                        return `Email not starred`
+                    }
                 }
             }),
             unstarEmail: tool({
@@ -144,7 +159,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id }) => {
                     const email = await unstarEmail(id) 
-                    return `Email unstarred successfully`
+                    if (email) {
+                        return `Email unstarred successfully`
+                    } else {
+                        return `Email not unstarred`
+                    }
                 }
             }),
             sendToTrash: tool({
@@ -154,7 +173,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id }) => {
                     const email = await sendToTrash(id)
-                    return `Email sent to trash successfully`
+                    if (email) {
+                        return `Email sent to trash successfully`
+                    } else {
+                        return `Email not sent to trash`
+                    }
                 }   
             }),
             unTrashEmail: tool({
@@ -164,7 +187,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }), 
                 execute: async ({ id }) => {
                     const email = await unTrashEmail(id)
-                    return `Email untrashed successfully`
+                    if (email) {
+                        return `Email untrashed successfully`
+                    } else {
+                        return `Email not untrashed`
+                    }
                 }
             }),
             getEmailLabelofSpecificEmail: tool({
@@ -174,7 +201,11 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ id }) => {
                     const email = await getEmailLabelofSpecificEmail(id)
-                    return `Email label: ${email.labelIds}`
+                    if (email) {
+                            return `Email label: ${email.data.labelIds}`
+                    } else {
+                        return `Email not found`
+                    }
                 }
             }),
             searchEmails: tool({
@@ -184,7 +215,7 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ query }) => {
                     const emails = await searchEmails(query)
-                    return `Here are the emails that match your query: ${emails.map((email) => email.data?.payload?.headers?.find((header: any) => header.name === 'Subject')?.value).join(', ')}`
+                    return `Here are the emails that match your query: ${emails.data.map((email: any) => email.data?.payload?.headers?.find((header: any) => header.name === 'Subject')?.value).join(', ')}`
                 }
             })      
         },

@@ -76,7 +76,7 @@ export default function LandingPage() {
                         <MessageSquare className="h-4 w-4 text-blue-400" />
                       </div>
                       <div className="bg-blue-900 rounded-lg p-3 text-sm text-blue-100">
-                        Reply to Sarah that I'll attend the meeting
+                        Reply to the email from Sarah that I will attend the meeting
                       </div>
                     </div>
                   </div>

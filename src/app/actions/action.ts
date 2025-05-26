@@ -26,7 +26,7 @@ const getAccessandRefreshToken = async (user_id: string) => {
     return account;
 }
 
-export async function getEmails(query: string) {
+export async function getEmails(query: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -97,17 +97,23 @@ export async function getEmails(query: string) {
             })
         );
 
-        return emails;
+        return{
+            status: 200,
+            data: emails,
+        }
         
         
         
     }catch(error){
         console.error("Error fetching emails:", error);
-        throw new Error("Error fetching emails");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function sendEmail(to: string, subject: string, body: string) {
+export async function sendEmail(to: string, subject: string, body: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -149,15 +155,21 @@ export async function sendEmail(to: string, subject: string, body: string) {
             }
         });
 
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
         
     }catch(error){
         console.error("Error sending email:", error);
-        throw new Error("Error sending email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function searchEmails(query: string) {
+export async function searchEmails(query: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -194,7 +206,10 @@ export async function searchEmails(query: string) {
 
         const messages = response.data.messages;
         if (!messages) {
-            return [];
+            return {
+                status: 404,
+                data: [],
+            }
         }
 
         const emails = await Promise.all(
@@ -207,17 +222,23 @@ export async function searchEmails(query: string) {
             })
         );
 
-        return emails;
+        return {
+            status: 200,
+            data: emails,
+        }
     } catch (error) {
         console.error("Error searching emails:", error);
-        throw new Error("Error searching emails");
+        return {
+            status: 500,
+            data: [],
+        }
     }
 }
 
 // composeEmail is essentially the same as sendEmail, so we'll export it as an alias
 export const composeEmail = sendEmail;
 
-export async function deleteEmail(id: string) {
+export async function deleteEmail(id: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -252,16 +273,22 @@ export async function deleteEmail(id: string) {
             id: id,
         });
         
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error deleting email:", error);
-        throw new Error("Error deleting email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 
 
 }
 
-export async function replyToEmail(id: string, to: string, subject: string, body: string) {
+export async function replyToEmail(id: string, to: string, subject: string, body: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -315,14 +342,20 @@ export async function replyToEmail(id: string, to: string, subject: string, body
             }
         }); 
 
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     } catch (error) {
         console.error("Error replying to email:", error);
-        throw new Error("Error replying to email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function starEmail(id: string) {
+export async function starEmail(id: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -360,14 +393,20 @@ export async function starEmail(id: string) {
             }
         })
 
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error starring email:", error);
-        throw new Error("Error starring email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function unstarEmail(id: string) {
+export async function unstarEmail(id: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -405,15 +444,21 @@ export async function unstarEmail(id: string) {
             }
         })
 
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error unstarring email:", error);
-        throw new Error("Error unstarring email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
 
-export async function getEmailLabelofSpecificEmail(id: string) {
+export async function getEmailLabelofSpecificEmail(id: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -448,14 +493,20 @@ export async function getEmailLabelofSpecificEmail(id: string) {
             id: id,
         });
         
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error getting email label of specific email:", error);
-        throw new Error("Error getting email label of specific email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function sendToTrash(id: string) {
+export async function sendToTrash(id: string): Promise<{status: number, data: any}> {
     const session = await auth();
 
     if (!session?.user) {
@@ -490,14 +541,20 @@ export async function sendToTrash(id: string) {
             id: id,
         });
         
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error sending email to trash:", error);
-        throw new Error("Error sending email to trash");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 
-export async function unTrashEmail(id: string) {
+export async function unTrashEmail(id: string): Promise<{status: number, data: any}>         {
     const session = await auth();
 
     if (!session?.user) {
@@ -532,10 +589,16 @@ export async function unTrashEmail(id: string) {
             id: id,
         });
         
-        return response.data;
+        return{
+            status: response.status,
+            data: response.data,
+        }
     }catch(error){
         console.error("Error untrashing email:", error);
-        throw new Error("Error untrashing email");
+        return{
+            status: 500,
+            data: [],
+        }
     }
 }
 

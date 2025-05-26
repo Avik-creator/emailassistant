@@ -75,7 +75,7 @@ const TermsOfService = () => {
           <h2 className="text-2xl font-semibold mb-4 text-green-300">7. Limitation of Liability</h2>
           <div className="space-y-4">
             <p>
-              Email Assistant is provided "as is" without any warranties, expressed or implied. We do not guarantee that:
+              Email Assistant is provided <b>as is</b> without any warranties, expressed or implied. We do not guarantee that:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-2">
               <li>The service will be error-free or uninterrupted</li>
@@ -103,7 +103,7 @@ const TermsOfService = () => {
         <section>
           <h2 className="text-2xl font-semibold mb-4 text-green-300">10. Changes to Terms</h2>
           <p className="mb-4">
-            We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new Terms of Service on this page and updating the "Last Updated" date.
+            We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new Terms of Service on this page and updating the <b>Last Updated</b> date.
           </p>
         </section>
 

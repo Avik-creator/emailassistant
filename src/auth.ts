@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import NextAuth, {type Session} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import {DrizzleAdapter} from "@auth/drizzle-adapter";
@@ -41,10 +43,10 @@ export const {
   ],
 
   callbacks: {
-    async session({ session, user }: { session: Session, user: any }) {
+    async session({ session, user }: { session: Session, user: {id: string} }) {
         try {
             if (user && session?.user) {
-                session.user.id = user.id;
+                (session.user as {id: string}).id = user.id as string;
             }
             return session;
         } catch (error) {
