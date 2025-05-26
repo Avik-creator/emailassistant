@@ -12,11 +12,6 @@ interface Message {
     toolInvocations?: ToolInvocation[];
 }
 
-interface EmailHeader {
-    name: string;
-    value: string;
-}
-
 
 const groq = createGroq({
     apiKey: process.env.GROQ_API_KEY
