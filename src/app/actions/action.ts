@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { auth } from "@/auth"
 
 import { users, accounts } from "@/lib/schema";

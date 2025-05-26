@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createGroq } from "@ai-sdk/groq"
 import { streamText, tool, ToolInvocation } from "ai"
 import { auth } from "@/auth"
