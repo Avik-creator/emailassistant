@@ -4,11 +4,13 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./lib/schema";
 
+
 export const {
   handlers,
   auth,
   signIn,
   signOut,
+  //@ts-ignore
 } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [
