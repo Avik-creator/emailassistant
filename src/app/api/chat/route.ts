@@ -224,6 +224,8 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }
             })      
         },
+        maxSteps: 4,
+        maxRetries: 3,
     })
 
     return result.toDataStreamResponse()

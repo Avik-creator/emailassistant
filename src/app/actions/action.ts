@@ -115,7 +115,7 @@ export async function getEmails(query: string): Promise<ApiResponse<EmailData[]>
         const response = await gmail.users.messages.list({
             userId: "me",
             q: query,
-            maxResults: 10
+            maxResults: 5
         });
 
         const messages = response.data.messages;
@@ -267,7 +267,7 @@ export async function searchEmails(query: string): Promise<ApiResponse<gmail_v1.
         const response = await gmail.users.messages.list({
             userId: "me",
             q: query,
-            maxResults: 10
+            maxResults: 5
         });
 
         const messages = response.data.messages;
