@@ -217,8 +217,7 @@ ${body.length > 200 ? body.substring(0, 200) + '...' : body}
                 }),
                 execute: async ({ query }) => {
                     const emails = await searchEmails(query)
-                    return `Here are the emails that match your query: ${emails.data.map((email: gmail_v1.Schema$Message) => 
-                        email.payload?.headers?.find(header => header.name === 'Subject')?.value).join(', ')}`
+                    return emails.data
                 }
             })      
         },
