@@ -17,9 +17,7 @@ import {
   const connectionString = process.env.AUTH_DRIZZLE_URL;
   const pool = postgres(connectionString, { 
     max: 1,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
   });
    
   export const db = drizzle(pool)
