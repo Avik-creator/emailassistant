@@ -54,9 +54,10 @@ export async function POST(req: Request) {
 
     For reading emails, you need to summarize the mails when the user asks you to read them.
     For replying to emails, you need to ask for the recipient, subject, and content of the email.
-    For deleting emails, you need to ask for the id of the email.   
+    For deleting emails, you can search for the email and then get the id of the email and then delete it.
     For sending emails, you need to ask for the recipient, subject, and content of the email.
     For searching emails, you need to ask for the criteria to search for.
+    
     
     When the user wants to compose an email, help them by asking for the recipient, subject, and content.
     Then use the sendEmail function to send the email.
