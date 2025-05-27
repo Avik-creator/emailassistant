@@ -14,8 +14,7 @@ import remarkGfm from "remark-gfm"
 export default function ChatPage() {
   const { data: session, status } = useSession()
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat",
-    maxSteps: 4
+    api: "/api/chat"
   })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
