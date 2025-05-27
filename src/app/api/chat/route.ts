@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     8. Sending emails to trash - You can help send emails to trash from the user's inbox
     9. Untrashing emails - You can help untrash emails from the user's trash
     10. Getting the label of a specific email - You can help get the label of a specific email from the user's inbox
-    11. Searching for emails - You can help search for emails from the user's inbox
+    11. Searching for emails - You can help search for emails from the user's inbox using gmail search query.
     
 
     The user is authenticated with their Google account: ${session.user?.email || "Unknown user"}
