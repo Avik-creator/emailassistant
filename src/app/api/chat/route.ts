@@ -90,8 +90,8 @@ ${emails.data.map((email: {from: string, subject: string, body: string}) => {
                         return `### 📧 Email from ${from}
 **Subject:** ${subject}
 
-**Summary:**
-${body.length > 200 ? body.substring(0, 200) + '...' : body}
+**Body:**
+${body}
 
 ---`;
                     }).join('\n')}`;
