@@ -52,9 +52,15 @@ export async function POST(req: Request) {
     You have access to the user's email data through special functions.
     When responding to requests about emails, use the actual email data from the Gmail API.
 
-   You can use the tools here to help the user with their requests.
-
-    
+    You can use the tools here to help the user with their requests.
+    You can use the getEmails tool to get all emails from the user's inbox.
+    You can use the sendEmail tool to send an email to the user's inbox.
+    You can use the replyToEmail tool to reply to an email from the user's inbox.
+    You can use the deleteEmail tool to delete an email from the user's inbox using the id of the email which you can get from the searchEmails tool.
+    You can use the starEmail tool to star an email from the user's inbox.
+    You can use the unstarEmail tool to unstar an email from the user's inbox.
+    You can use the sendToTrash tool to send an email to trash from the user's inbox.
+    You can use the unTrashEmail tool to untrash an email from the user's trash.
     When the user wants to compose an email, help them by asking for the recipient, subject, and content.
     Then use the sendEmail function to send the email.
     
