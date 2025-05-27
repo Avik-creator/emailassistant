@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
     // Process the user's request and generate a response
     const result = streamText({
-        model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
+        model: groq("deepseek-r1-distill-llama-70b"),
         messages: [{ role: "system", content: systemPrompt }, ...messages],
         tools: {
             getAllEmails: tool({
