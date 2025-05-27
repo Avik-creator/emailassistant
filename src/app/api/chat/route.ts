@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     When the user wants to compose an email, help them by asking for the recipient, subject, and content.
     Then use the sendEmail function to send the email.
     
-    Always be helpful, concise, and respectful of the user's privacy.
+    Always be helpful, concise, and respectful of the user's privacy and always fetch the latest data.
   `
 
     // Process the user's request and generate a response
@@ -123,7 +123,7 @@ ${body}
                 }),
                 execute: async ({ id, to, subject, body }) => {
                     const email = await replyToEmail(id, to, subject, body)
-                    if (email) {
+                    if (email.status === 200) {
                         return `Email replied to successfully to ${to} with subject ${subject} and body ${body}`
                     } else {
                         return `Email not replied to`
@@ -137,7 +137,7 @@ ${body}
                 }),
                 execute: async ({ id }) => {
                     const email = await deleteEmail(id)
-                    if(email.status === 500)    {
+                    if(email.status === 200)    {
                         return `Email not deleted`
                     }
                     return `Email deleted successfully`
@@ -150,7 +150,7 @@ ${body}
                 }),
                 execute: async ({ id }) => {
                     const email = await starEmail(id)
-                    if (email.data) {
+                    if (email.status === 200) {
                         return `Email starred successfully`
                     } else {
                         return `Email not starred`
@@ -164,7 +164,7 @@ ${body}
                 }),
                 execute: async ({ id }) => {
                     const email = await unstarEmail(id) 
-                    if (email) {
+                    if (email.status === 200) {
                         return `Email unstarred successfully`
                     } else {
                         return `Email not unstarred`
@@ -178,7 +178,7 @@ ${body}
                 }),
                 execute: async ({ id }) => {
                     const email = await sendToTrash(id)
-                    if (email) {
+                    if (email.status === 200) {
                         return `Email sent to trash successfully`
                     } else {
                         return `Email not sent to trash`
@@ -192,7 +192,7 @@ ${body}
                 }), 
                 execute: async ({ id }) => {
                     const email = await unTrashEmail(id)
-                    if (email) {
+                    if (email.status === 200) {
                         return `Email untrashed successfully`
                     } else {
                         return `Email not untrashed`
@@ -206,7 +206,7 @@ ${body}
                 }),
                 execute: async ({ id }) => {
                     const email = await getEmailLabelofSpecificEmail(id)
-                    if (email) {
+                    if (email.status === 200) {
                             return `Email label: ${email.data.labelIds}`
                     } else {
                         return `Email not found`
